@@ -1,3 +1,6 @@
+<script setup>
+// No es necesario código adicional aquí por ahora
+</script>
 <template>
   <div class="home-wrapper">
     <h1 class="title">StocksRefferer</h1>
@@ -12,7 +15,3 @@
     </RouterLink>
   </div>
 </template>
-
-<script setup>
-// No es necesario código adicional aquí por ahora
-</script>

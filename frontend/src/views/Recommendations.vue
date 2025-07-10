@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppHeader from '@/components/Header.vue'
+import Slider from '@/components/Slider.vue'
 import StocksTable from '@/components/StocksTable.vue'
 </script>
 <template>
@@ -14,6 +15,9 @@ import StocksTable from '@/components/StocksTable.vue'
         invertir en acciones, y con el, le daremos las recomendaciones que mas se ajusten
         a su perfil
       </p>
+      <div class="p-6">
+        <Slider />
+      </div>
       <StocksTable />
     </main>
   </div>
