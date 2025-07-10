@@ -1,9 +1,10 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-
+import type { Stock } from '@/types/stocks'
+import { getAcciones } from '@/requests/requests'
 export const useStockStore = defineStore('stocks', () => {
   const riesgo = ref(0)
-
+  const acciones = ref<Stock[]>([])
   const etiquetasRiesgo: Record<number, string> = {
     0: 'Muy Bajo',
     1: 'Bajo',
@@ -22,5 +23,14 @@ export const useStockStore = defineStore('stocks', () => {
   { key: 'time', label: 'Fecha' },
 ] as const
 
-  return {Columns, riesgo, etiquetasRiesgo}
+  async function cargarAcciones() {
+    try {
+      const datos = await getAcciones()
+      acciones.value = datos
+    } catch (error) {
+      console.error('Error al obtener acciones:', error)
+    }
+  }
+
+  return {Columns, riesgo, etiquetasRiesgo, acciones, cargarAcciones}
 })

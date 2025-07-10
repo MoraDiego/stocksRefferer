@@ -7,8 +7,14 @@ import (
 	"stocksRefferer/models"
 )
 
-func GetAccionesHandler(w http.ResponseWriter, r *http.Request) {
+func enableCORS(w http.ResponseWriter) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+}
 
+func GetAccionesHandler(w http.ResponseWriter, r *http.Request) {
+	enableCORS(w)
 	DB := db.Connect()
 
 	var acciones []models.Stock

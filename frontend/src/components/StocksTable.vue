@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useStockStore } from '@/stores/stocks'
+import { storeToRefs } from 'pinia'
 const store = useStockStore()
-const columns  = store.Columns.map(col => col.key)
+const columns  = store.Columns.map(col => col)
+store.cargarAcciones()
+const {acciones} = storeToRefs(store)
 </script>
 <template>
     <div class="overflow-x-auto">
@@ -12,17 +15,21 @@ const columns  = store.Columns.map(col => col.key)
               v-for="col in columns"
               class="px-4 py-2 border"
             >
-              {{col}}
+              {{ col.label }}
             </th>
           </tr>
         </thead>
         <tbody>
           <tr
+            v-for="stock in acciones"
             class="hover:bg-green-50"
           >
-            <td v-for="col in columns" class="px-4 py-2 border">
-              <span>
-                {{col}}
+            <td v-for="col in columns" :key="col.key" class="px-4 py-2 border">
+              <span v-if="col.key === 'rating'">
+                {{ stock.rating_from }} → {{ stock.rating_to }}
+              </span>
+              <span v-else>
+                {{ stock[col.key as keyof typeof stock] }}
               </span>
             </td>
           </tr>
