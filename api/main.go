@@ -14,5 +14,6 @@ func init() {
 }
 func main() {
 	http.HandleFunc("/acciones", handlers.GetAccionesHandler)
+	http.HandleFunc("/accionesRiesgo", handlers.GetAccionesByRiskHandler)
 	fmt.Print(http.ListenAndServe(":8080", nil))
 }

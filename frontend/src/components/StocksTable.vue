@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useStockStore } from '@/stores/stocks'
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 const store = useStockStore()
 const columns  = store.Columns.map(col => col)
-store.cargarAcciones()
 const {acciones} = storeToRefs(store)
 //Paginacion de la tabla
 const currentPage = ref(1)
@@ -22,6 +21,11 @@ function nextPage() {
 function prevPage() {
   if (currentPage.value > 1) currentPage.value--
 }
+watch(() => store.acciones.length, () => {
+  if (currentPage.value > totalPages.value) {
+    currentPage.value = totalPages.value || 1
+  }
+})
 </script>
 <template>
     <div class="overflow-x-auto">

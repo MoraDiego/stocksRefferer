@@ -1,7 +1,7 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import type { Stock } from '@/types/stocks'
-import { getAcciones } from '@/requests/requests'
+import { getAcciones, getAccionesPorRiesgo } from '@/requests/requests'
 export const useStockStore = defineStore('stocks', () => {
   const riesgo = ref(0)
   const acciones = ref<Stock[]>([])
@@ -31,6 +31,17 @@ export const useStockStore = defineStore('stocks', () => {
       console.error('Error al obtener acciones:', error)
     }
   }
+  async function cargarAccionesRiesgo() {
+    try {
+      const datos = await getAccionesPorRiesgo(riesgo.value)
+      acciones.value = datos
+    } catch (error) {
+      console.error('Error al obtener acciones:', error)
+    }
+  }
+  watch(riesgo, () => {
+    cargarAccionesRiesgo()
+  }, { immediate: true })
 
   return {Columns, riesgo, etiquetasRiesgo, acciones, cargarAcciones}
 })
