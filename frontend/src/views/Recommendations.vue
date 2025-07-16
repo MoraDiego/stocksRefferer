@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FilterDropDown from '@/components/FilterDropDown.vue';
 import AppHeader from '@/components/Header.vue'
 import Slider from '@/components/Slider.vue'
 import StocksTable from '@/components/StocksTable.vue'
@@ -15,8 +16,13 @@ import StocksTable from '@/components/StocksTable.vue'
         invertir en acciones, y con el, le daremos las recomendaciones que mas se ajusten
         a su perfil
       </p>
-      <div class="p-6">
-        <Slider />
+      <div class="relative inline-flex w-full">
+        <div class="p-6">
+          <FilterDropDown />
+        </div>
+        <div class="p-6 absolute left-1/2 -translate-x-1/2">
+          <Slider />
+        </div>
       </div>
       <StocksTable />
     </main>

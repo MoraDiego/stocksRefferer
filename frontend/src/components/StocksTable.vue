@@ -3,7 +3,6 @@ import { useStockStore } from '@/stores/stocks'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
 const store = useStockStore()
-const columns  = store.Columns.map(col => col)
 const {acciones} = storeToRefs(store)
 //Paginacion de la tabla
 const currentPage = ref(1)
@@ -33,7 +32,7 @@ watch(() => store.acciones.length, () => {
         <thead>
           <tr class="bg-green-100 text-left text-sm font-medium text-green-800 uppercase">
             <th
-              v-for="col in columns"
+              v-for="col in store.columnasVisibles"
               class="px-4 py-2 border"
             >
               {{ col.label }}
@@ -45,7 +44,7 @@ watch(() => store.acciones.length, () => {
             v-for="stock in paginatedStocks"
             class="hover:bg-green-50"
           >
-            <td v-for="col in columns" :key="col.key" class="px-4 py-2 border">
+            <td v-for="col in store.columnasVisibles" :key="col.key" class="px-4 py-2 border">
               <span v-if="col.key === 'rating'">
                 {{ stock.rating_from }} → {{ stock.rating_to }}
               </span>

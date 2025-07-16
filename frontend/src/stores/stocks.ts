@@ -12,17 +12,19 @@ export const useStockStore = defineStore('stocks', () => {
     3: 'Alto'
   }
 
-  const Columns = [
-  { key: 'ticker', label: 'Ticker' },
-  { key: 'company', label: 'Empresa' },
-  { key: 'action', label: 'Acción' },
-  { key: 'TargetFrom', label: 'Desde' },
-  { key: 'TargetTo', label: 'Hacia' },
-  { key: 'rating', label: 'Calificación' },
-  { key: 'brokerage', label: 'Broker' },
-  { key: 'time', label: 'Fecha' },
-] as const
-
+  const columnas = ref([
+    { key: 'ticker', label: 'Ticker', visible: true },
+    { key: 'company', label: 'Empresa', visible: true },
+    { key: 'action', label: 'Acción', visible: true },
+    { key: 'TargetFrom', label: 'Desde', visible: true },
+    { key: 'TargetTo', label: 'Hacia', visible: true },
+    { key: 'rating', label: 'Calificación', visible: true },
+    { key: 'brokerage', label: 'Broker', visible: true },
+    { key: 'time', label: 'Fecha', visible: true }
+  ])
+  const columnasVisibles = computed(() =>
+    columnas.value.filter(col => col.visible)
+  )
   async function cargarAcciones() {
     try {
       const datos = await getAcciones()
@@ -43,5 +45,5 @@ export const useStockStore = defineStore('stocks', () => {
     cargarAccionesRiesgo()
   }, { immediate: true })
 
-  return {Columns, riesgo, etiquetasRiesgo, acciones, cargarAcciones}
+  return {columnas, columnasVisibles, riesgo, etiquetasRiesgo, acciones, cargarAcciones}
 })
